@@ -1,19 +1,45 @@
 import './App.css'
 
-import React, {Component} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
-class App extends Component {
-  render() {
-    return <div className="App">
-      <div className="App-heading App-flex">
-        <h2>Welcome to <span className="App-react">React</span></h2>
-      </div>
-      <div className="App-instructions App-flex">
-        <img className="App-logo" src={require('./react.svg')}/>
-        <p>Edit <code>src/App.js</code> and save to hot reload your changes.</p>
-      </div>
-    </div>
+function App() {
+  const [times, setTimes] = useState([0, 0, 0]);
+  const [isRunning, setIsRunning] = useState(false);
+
+  const stopRef = useRef();
+
+  const print = () => {
+    stopRef.current.innerText = times;
   }
+
+  useEffect(() => {
+  
+    print();
+  });
+  
+  return (
+    <div>
+      <nav className="controls">
+        <a href="#" className="button">
+          Start
+        </a>
+        <a href="#">
+          Lap
+        </a>
+        <a href="#">
+          Stop
+        </a>
+        <a href="#">
+          Restart
+        </a>
+        <a href="#">
+          Clear Laps
+        </a>
+      </nav>
+      <div ref={stopRef} className="Stopwatch"></div>
+      <ul className="results"></ul>
+    </div>
+  );
 }
 
 export default App
