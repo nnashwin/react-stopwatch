@@ -13,7 +13,6 @@ function App() {
   const [times, setTimes] = useState([0, 0, 0]);
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [globalID, setGlobalID] = useState(0);
 
   const stopRef = useRef();
 
@@ -31,30 +30,24 @@ function App() {
   }
 
   const start = () => {
-    if (!time) setTime(performance.now());
     if (!isRunning) {
       setIsRunning(true);
-      setGlobalID(requestAnimationFrame(step.bind(this)));
-    }
-  }
-
-  const step = (timestamp) => {
-    if (!isRunning) return;
-    if (isRunning) {
-      requestAnimationFrame(step);
+      setTime(performance.now());
     }
   }
 
   const stop = () => {
+    console.log('clicked stop');
     setIsRunning(false)
-    cancelAnimationFrame(globalID);
+    setTime(performance.now())
   };
 
   useEffect(() => {
+    console.log(time)
     if (isRunning) {
       requestAnimationFrame(setTime);
     }
-  })
+  }, [time])
 
   return (
     <div>
